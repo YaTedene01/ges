@@ -145,92 +145,94 @@
     <div class="form-container">
         <h2 class="form-header">Ajout apprenant</h2>
         
-        <div class="form-section">
-            <div class="section-title">
-                Informations de l'apprenant
-                <span class="edit-icon">✏️</span>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Prénom(s)</label>
-                    <input type="text" class="form-control" />
+        <form action="/apprenants/create" method="POST">
+            <div class="form-section">
+                <div class="section-title">
+                    Informations de l'apprenant
+                    <span class="edit-icon">✏️</span>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Nom</label>
-                    <input type="text" class="form-control" />
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Prénom(s)</label>
+                        <input type="text" class="form-control" name="prenom" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nom</label>
+                        <input type="text" class="form-control" name="nom" required />
+                    </div>
                 </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group calendar-icon">
-                    <label class="form-label">Date de naissance</label>
-                    <input type="text" class="form-control" placeholder="JJ/MM/AAAA" />
+                
+                <div class="form-row">
+                    <div class="form-group calendar-icon">
+                        <label class="form-label">Date de naissance</label>
+                        <input type="text" class="form-control" name="date_naissance" placeholder="JJ/MM/AAAA" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Lieu de naissance</label>
+                        <input type="text" class="form-control" name="lieu_naissance" required />
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Lieu de naissance</label>
-                    <input type="text" class="form-control" />
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Adresse</label>
+                        <input type="text" class="form-control" name="adresse" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required />
+                    </div>
                 </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Adresse</label>
-                    <input type="text" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" />
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Téléphone</label>
-                    <input type="tel" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <div class="file-upload">
-                        <div class="upload-icon">📄</div>
-                        <div class="upload-text">Ajouter des documents</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Téléphone</label>
+                        <input type="tel" class="form-control" name="telephone" required />
+                    </div>
+                    <div class="form-group">
+                        <div class="file-upload">
+                            <div class="upload-icon">📄</div>
+                            <div class="upload-text">Ajouter des documents</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="form-section">
-            <div class="section-title">
-                Informations du tuteur
-                <span class="edit-icon">✏️</span>
+            
+            <div class="form-section">
+                <div class="section-title">
+                    Informations du tuteur
+                    <span class="edit-icon">✏️</span>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Prénom(s) & nom</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Lien de parenté</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Adresse</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Téléphone</label>
+                        <input type="tel" class="form-control" />
+                    </div>
+                </div>
             </div>
             
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Prénom(s) & nom</label>
-                    <input type="text" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Lien de parenté</label>
-                    <input type="text" class="form-control" />
-                </div>
+            <div class="buttons">
+                <button class="btn btn-cancel">Annuler</button>
+                <button type="submit" class="btn btn-submit">Enregistrer</button>
             </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Adresse</label>
-                    <input type="text" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Téléphone</label>
-                    <input type="tel" class="form-control" />
-                </div>
-            </div>
-        </div>
-        
-        <div class="buttons">
-            <button class="btn btn-cancel">Annuler</button>
-            <button class="btn btn-submit">Enregistrer</button>
-        </div>
+        </form>
     </div>
 </body>
 </html>

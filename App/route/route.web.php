@@ -69,7 +69,9 @@ return [
     'POST /promotions/create' => 'App\Controllers\PromoController@create',
     // 'POST /promotions/delete' => fn() => Promo\deletePromotion(),
 
-    'GET /referentiels' => fn() => protectedView('referentiels', 'referentiels/index.php', 'Gestion des Référentiels'),
+    'GET /referentiels' => function () {
+        App\Controllers\showActivePromotionReferentiels();
+    },
 
     'GET /referentiels/create' => function () {
         session_init();
@@ -78,8 +80,32 @@ return [
     },
     'POST /referentiels/create' => fn() => App\Controllers\addReferentiel(),
 
+    'GET /referentiels/index' => function () {
+        App\Controllers\showReferentiels();
+    },
+
+    'GET /referentiels/affreferentiel' => function () {
+        App\Controllers\showAffReferentiel();
+    },
+
+    'POST /referentiels/affecter' => function () {
+        App\Controllers\affecterReferentiel();
+    },
+
+    'POST /referentiels/desaffecter' => function () {
+        App\Controllers\desaffecterReferentiel();
+    },
+
     'GET /apprenants' => function () {
         App\Controllers\showApprenants();
+    },
+
+    'GET /apprenants/ajoutApprenant' => function () {
+        App\Controllers\showAjoutApprenant();
+    },
+
+    'POST /apprenants/create' => function () {
+        App\Controllers\createApprenant();
     },
 
     'GET /forgot-password' => fn() => User\forgotPassword(),

@@ -105,20 +105,26 @@
         <h1>Affecter/Désaffecter des Référentiels</h1>
         <div class="subtitle">Promotion : Promotion 2025</div>
 
-        <button class="btn-back">
+        <a href="/referentiels" class="btn-back">
             <i class="fas fa-arrow-left"></i> Retour aux référentiels
-        </button>
+        </a>
 
         <div class="referentiels-container">
             <div class="referentiels-box">
                 <h2>Référentiels affectés</h2>
                 <div class="referentiel-item">
                     <div>Référent Digital</div>
-                    <button class="btn">-</button>
+                    <form action="/referentiels/desaffecter" method="POST" style="display: inline;">
+                        <input type="hidden" name="referentiel_id" value="ID_DU_REFERENTIEL">
+                        <button type="submit" class="btn">-</button>
+                    </form>
                 </div>
                 <div class="referentiel-item">
                     <div>Hackeuse</div>
-                    <button class="btn">-</button>
+                    <form action="/referentiels/desaffecter" method="POST" style="display: inline;">
+                        <input type="hidden" name="referentiel_id" value="ID_DU_REFERENTIEL">
+                        <button type="submit" class="btn">-</button>
+                    </form>
                 </div>
             </div>
 
@@ -126,19 +132,31 @@
                 <h2>Référentiels non affectés</h2>
                 <div class="referentiel-item">
                     <div>Développement Web</div>
-                    <button class="btn">+</button>
+                    <form action="/referentiels/affecter" method="POST" style="display: inline;">
+                        <input type="hidden" name="referentiel_id" value="ID_DU_REFERENTIEL">
+                        <button type="submit" class="btn">+</button>
+                    </form>
                 </div>
                 <div class="referentiel-item">
                     <div>Développement Data</div>
-                    <button class="btn">+</button>
+                    <form action="/referentiels/affecter" method="POST" style="display: inline;">
+                        <input type="hidden" name="referentiel_id" value="ID_DU_REFERENTIEL">
+                        <button type="submit" class="btn">+</button>
+                    </form>
                 </div>
                 <div class="referentiel-item">
                     <div>AWS & DevOps</div>
-                    <button class="btn">+</button>
+                    <form action="/referentiels/affecter" method="POST" style="display: inline;">
+                        <input type="hidden" name="referentiel_id" value="ID_DU_REFERENTIEL">
+                        <button type="submit" class="btn">+</button>
+                    </form>
                 </div>
                 <div class="referentiel-item">
                     <div>Cybersécurité</div>
-                    <button class="btn">+</button>
+                    <form action="/referentiels/affecter" method="POST" style="display: inline;">
+                        <input type="hidden" name="referentiel_id" value="ID_DU_REFERENTIEL">
+                        <button type="submit" class="btn">+</button>
+                    </form>
                 </div>
             </div>
         </div>

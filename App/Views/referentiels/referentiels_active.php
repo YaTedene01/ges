@@ -88,7 +88,7 @@ error_reporting(E_ALL);
         }
 
         .btn svg {
-            width: 16px;
+            width: 1px;
             height: 16px;
             stroke: white;
         }
@@ -163,9 +163,9 @@ error_reporting(E_ALL);
         <div class="search">
             <input type="text" class="search-input" placeholder="Rechercher un référentiel...">
             <!-- Bouton "Tous" -->
-            <a href="index" class="btn">Tous</a>
+            <a href="/referentiels/index" class="btn">Tous</a>
             <!-- Bouton "Ajouter Référentiel" -->
-            <a href="#add-referentiel-modal" class="btn">
+            <a href="/referentiels/affreferentiel" class="btn">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 5v14M5 12h14"/>
                 </svg>

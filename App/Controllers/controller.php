@@ -58,19 +58,17 @@ function showPromotions() {
 }
 
 function showReferentiels() {
-    // Chemin vers le fichier JSON
+    // Charger les données nécessaires (par exemple, depuis un fichier JSON)
     $filePath = __DIR__ . '/../data/global.json';
-
-    // Charger le contenu du fichier JSON
     $jsonData = file_get_contents($filePath);
     $data = json_decode($jsonData, true);
 
     // Récupérer les référentiels
     $referentiels = $data['referentiels'] ?? [];
 
-    // Afficher la vue avec les référentiels
+    // Rendre la vue
     render_view('referentiels/index', [
-        'pageTitle' => 'Liste des Référentiels',
+        'pageTitle' => 'Tous les Référentiels',
         'referentiels' => $referentiels,
     ]);
 }
@@ -194,4 +192,167 @@ function showApprenants() {
         'pageTitle' => 'Liste des Apprenants',
         'apprenants' => $apprenants,
     ]);
+}
+
+function showAffReferentiel() {
+    $filePath = __DIR__ . '/../data/global.json';
+    $jsonData = file_get_contents($filePath);
+    $data = json_decode($jsonData, true);
+
+    error_log("Données des référentiels affectés : " . print_r($data['referentiels_affectes'] ?? [], true));
+    error_log("Données des référentiels non affectés : " . print_r($data['referentiels_non_affectes'] ?? [], true));
+
+    render_view('referentiels/affreferentiel', [
+        'pageTitle' => 'Affecter/Désaffecter des Référentiels',
+        'referentielsAffectes' => $data['referentiels_affectes'] ?? [],
+        'referentielsNonAffectes' => $data['referentiels_non_affectes'] ?? [],
+    ]);
+}
+
+function showAjoutApprenant() {
+    // Charger les données nécessaires si besoin (par exemple, des référentiels)
+    $filePath = __DIR__ . '/../data/global.json';
+    $jsonData = file_get_contents($filePath);
+    $data = json_decode($jsonData, true);
+
+    // Rendre la vue
+    render_view('Apprennants/ajoutApprenant', [
+        'pageTitle' => 'Ajouter un Apprenant',
+        'referentiels' => $data['referentiels'] ?? [],
+    ]);
+}
+
+function createApprenant() {
+    // Récupérer les données du formulaire
+    $prenom = $_POST['prenom'] ?? null;
+    $nom = $_POST['nom'] ?? null;
+    $date_naissance = $_POST['date_naissance'] ?? null;
+    $lieu_naissance = $_POST['lieu_naissance'] ?? null;
+    $adresse = $_POST['adresse'] ?? null;
+    $email = $_POST['email'] ?? null;
+    $telephone = $_POST['telephone'] ?? null;
+
+    // Valider les champs obligatoires
+    if (!$prenom || !$nom || !$date_naissance || !$lieu_naissance || !$adresse || !$email || !$telephone) {
+        die('Tous les champs sont obligatoires.');
+    }
+
+    // Charger les données existantes
+    $filePath = __DIR__ . '/../data/global.json';
+    $jsonData = file_get_contents($filePath);
+    $data = json_decode($jsonData, true);
+
+    // Ajouter le nouvel apprenant
+    $newApprenant = [
+        'id' => uniqid(),
+        'prenom' => $prenom,
+        'nom' => $nom,
+        'date_naissance' => $date_naissance,
+        'lieu_naissance' => $lieu_naissance,
+        'adresse' => $adresse,
+        'email' => $email,
+        'telephone' => $telephone,
+    ];
+    $data['apprenants'][] = $newApprenant;
+
+    // Sauvegarder les données mises à jour
+    file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT));
+
+    // Rediriger vers la liste des apprenants
+    header('Location: /apprenants');
+    exit;
+}
+
+function searchApprenants() {
+    $matricule = $_GET['matricule'] ?? '';
+    $classe = $_GET['classe'] ?? '';
+    $statut = $_GET['statut'] ?? '';
+
+    $filePath = __DIR__ . '/../data/global.json';
+    $jsonData = file_get_contents($filePath);
+    $data = json_decode($jsonData, true);
+
+    $apprenants = $data['apprenants'] ?? [];
+
+    // Filtrer les apprenants
+    $filtered = array_filter($apprenants, function ($apprenant) use ($matricule, $classe, $statut) {
+        return (!$matricule || strpos($apprenant['matricule'], $matricule) !== false) &&
+               (!$classe || $apprenant['referentiel'] === $classe) &&
+               (!$statut || $apprenant['statut'] === $statut);
+    });
+
+    return $filtered;
+}
+
+function paginateApprenants($apprenants, $page, $limit) {
+    $total = count($apprenants);
+    $start = ($page - 1) * $limit;
+    $end = min($start + $limit, $total);
+
+    return [
+        'apprenants' => array_slice($apprenants, $start, $limit),
+        'total' => $total,
+        'start' => $start + 1,
+        'end' => $end,
+        'totalPages' => ceil($total / $limit),
+        'currentPage' => $page,
+    ];
+}
+
+function affecterReferentiel() {
+    $referentielId = $_POST['referentiel_id'] ?? null;
+
+    if (!$referentielId) {
+        die('ID du référentiel manquant.');
+    }
+
+    $filePath = __DIR__ . '/../data/global.json';
+    $jsonData = file_get_contents($filePath);
+    $data = json_decode($jsonData, true);
+
+    // Trouver le référentiel dans les non affectés
+    foreach ($data['referentiels_non_affectes'] as $key => $referentiel) {
+        if ($referentiel['id'] === $referentielId) {
+            // Déplacer le référentiel vers les affectés
+            $data['referentiels_affectes'][] = $referentiel;
+            unset($data['referentiels_non_affectes'][$key]);
+            break;
+        }
+    }
+
+    // Sauvegarder les modifications
+    file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT));
+
+    // Rediriger vers la page
+    header('Location: /referentiels/affreferentiel');
+    exit;
+}
+
+function desaffecterReferentiel() {
+    $referentielId = $_POST['referentiel_id'] ?? null;
+
+    if (!$referentielId) {
+        die('ID du référentiel manquant.');
+    }
+
+    $filePath = __DIR__ . '/../data/global.json';
+    $jsonData = file_get_contents($filePath);
+    $data = json_decode($jsonData, true);
+
+    // Trouver le référentiel dans les affectés
+    foreach ($data['referentiels_affectes'] as $key => $referentiel) {
+        if ($referentiel['id'] === $referentielId) {
+            // Déplacer le référentiel vers les non affectés
+            $data['referentiels_non_affectes'][] = $referentiel;
+            unset($data['referentiels_affectes'][$key]);
+            break;
+        }
+    }
+
+    // Sauvegarder les modifications
+    file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT));
+
+    // Rediriger vers la page
+    header('Location: /referentiels/affreferentiel');
+    exit;
 }

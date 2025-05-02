@@ -247,7 +247,8 @@
     <!-- Action Buttons -->
     <div class="action-buttons">
         <button class="btn btn-outline">Télécharger la liste</button>
-        <button class="btn btn-primary">Ajouter apprenant</button>
+        <!-- Bouton Ajouter Apprenant -->
+        <a href="/apprenants/ajoutApprenant" class="btn btn-primary">Ajouter Apprenant</a>
     </div>
     
     <!-- Tabs -->
