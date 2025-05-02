@@ -1,0 +1,208 @@
+{
+    "users": [
+        {
+            "id": "ADM-001",
+            "matricule": "ADM001",
+            "email": "admin@sonatel.sn",
+            "password": "passer123",
+            "role": "admin",
+            "nom": " Ya Tedene Faye"
+        }
+    ],
+    "promotions": [
+        {
+            "nom": "Promotion 2025",
+            "date_debut": "12\/02\/2025",
+            "date_fin": "13\/12\/2025",
+            "photo": "promo_680635934815f.png",
+            "statut": "active",
+            "nbr_etudiants": 0,
+            "referentiels": [
+                "AWS"
+            ],
+            "id": "promo_680030b2430d5"
+        },
+        {
+            "nom": "Promotion 2023",
+            "date_debut": "01\/02\/2023",
+            "date_fin": "01\/11\/2023",
+            "photo": "promo_680635934815f.png",
+            "statut": "inactive",
+            "nbr_etudiants": 0,
+            "referentiels": [
+                "REF DIG"
+            ],
+            "id": "promo_6800fcb475b85"
+        },
+        {
+            "nom": "Promotion 2024",
+            "date_debut": "12\/03\/2024",
+            "date_fin": "06\/12\/2024",
+            "photo": "promo_680635934815f.png",
+            "statut": "inactive",
+            "nbr_etudiants": 0,
+            "referentiels": [
+                "DEV DATA"
+            ],
+            "id": "promo_68004f7fa4555"
+        },
+        {
+            "nom": "Promotion 2022",
+            "date_debut": "01\/02\/2022",
+            "date_fin": "01\/12\/2022",
+            "photo": "promo_680635934815f.png",
+            "statut": "inactive",
+            "nbr_etudiants": 0,
+            "referentiels": [
+                "DEV WEB"
+            ],
+            "id": "promo_68028be4ef9d7"
+        },
+        {
+            "nom": "Promotion 2021",
+            "date_debut": "12\/02\/2021",
+            "date_fin": "13\/12\/2021",
+            "photo": "promo_680635934815f.png",
+            "statut": "inactive",
+            "nbr_etudiants": 0,
+            "referentiels": [
+                "HACKEUSE"
+            ],
+            "id": "promo_6803b134a7dcc"
+        }
+    ],
+    "referentiels": [
+        {
+            "id": "ref_1",
+            "nom": "R\u00e9f\u00e9rent digital",
+            "description": "Couteau-suisse du num\u00e9rique, le r\u00e9f\u00e9rent digital participe activement \u00e0 la transformation digitale.",
+            "promotion_id": "promo_6800fcb475b85",
+            "image": "/assets/images/refdij.jpeg"
+
+        },
+        {
+            "id": "ref_2",
+            "nom": "D\u00e9veloppement data",
+            "description": "De l'analyse du besoin \u00e0 la data visualisation, en passant par la r\u00e9colte et le traitement des donn\u00e9es.",
+            "promotion_id": "promo_68004f7fa4555",
+            "image": "/assets/images/data.jpeg"
+
+        },
+        {
+            "id": "ref_3",
+            "nom": "Assistanat Digital (Hackeuse)",
+            "description": "La formation d'assistante digitale r\u00e9serv\u00e9e uniquement aux femmes.",
+            "promotion_id": "promo_6803b134a7dcc",
+            "image": "/assets/images/hakeuse.jpeg"
+
+        },
+        {
+            "id": "ref_4",
+            "nom": "AWS & DevOps",
+            "description": "De l'analyse des besoins au monitoring de l'infrastructure, en passant par le d\u00e9veloppement et le d\u00e9ploiement.",
+            "promotion_id": "promo_680030b2430d5",
+            "image": "/assets/images/devops.jpeg"
+
+        },
+        {
+            "id": "ref_5",
+            "nom": "D\u00e9veloppement web\/mobile",
+            "description": "De l'analyse du besoin \u00e0 la mise en production d'applications web et mobiles.",
+            "promotion_id": "promo_68028be4ef9d7",
+            "image": "/assets/images/web.jpeg"
+
+        }
+    ],
+    "apprenants": [
+        {
+            "photo": "\/api\/placeholder\/30\/30",
+            "matricule": "1068216",
+            "nom_complet": "Seydina Mouhammad Diop",
+            "adresse": "Daup Libert\u00e9 6 Vila 659 Dakar, S\u00e9n\u00e9gal",
+            "telephone": "786959164",
+            "referentiel": "DEV WEB\/MOBILE",
+            "statut": "Actif"
+        },
+        {
+            "photo": "\/api\/placeholder\/30\/30",
+            "matricule": "1068216",
+            "nom_complet": "Mamadou Diarra",
+            "adresse": "Sicap Mbao Cit\u00e9 Dakar, S\u00e9n\u00e9gal",
+            "telephone": "783118455",
+            "referentiel": "REF DEV",
+            "statut": "Actif"
+        },
+        {
+            "photo": "\/api\/placeholder\/30\/30",
+            "matricule": "1068217",
+            "nom_complet": "Fatou L\u00f4",
+            "adresse": "Daup Hamo 5, Dakar, S\u00e9n\u00e9gal",
+            "telephone": "784557030",
+            "referentiel": "DEV DATA",
+            "statut": "Actif"
+        },
+        {
+            "photo": "\/api\/placeholder\/30\/30",
+            "matricule": "1068218",
+            "nom_complet": "Seydina Mouhammad Diop",
+            "adresse": "Daup Libert\u00e9 6 Vila 659 Dakar, S\u00e9n\u00e9gal",
+            "telephone": "786959164",
+            "referentiel": "HORS",
+            "statut": "Actif"
+        },
+        {
+            "photo": "\/api\/placeholder\/30\/30",
+            "matricule": "1068219",
+            "nom_complet": "Seydina Mouhammad Diop",
+            "adresse": "Daup Libert\u00e9 6 Vila 659 Dakar, S\u00e9n\u00e9gal",
+            "telephone": "786959164",
+            "referentiel": "DEV WEB\/MOBILE",
+            "statut": "Actif"
+        },
+        {
+            "photo": "\/api\/placeholder\/30\/30",
+            "matricule": "1068220",
+            "nom_complet": "Seydina Mouhammad Diop",
+            "adresse": "Daup Libert\u00e9 6 Vila 659 Dakar, S\u00e9n\u00e9gal",
+            "telephone": "786959164",
+            "referentiel": "DEV WEB\/MOBILE",
+            "statut": "Suspendu"
+        },
+        {
+            "photo": "\/api\/placeholder\/30\/30",
+            "matricule": "1068221",
+            "nom_complet": "Seydina Mouhammad Diop",
+            "adresse": "Daup Libert\u00e9 6 Vila 659 Dakar, S\u00e9n\u00e9gal",
+            "telephone": "786959164",
+            "referentiel": "IACULTURE",
+            "statut": "Actif"
+        },
+        {
+            "photo": "\/api\/placeholder\/30\/30",
+            "matricule": "1068222",
+            "nom_complet": "Seydina Mouhammad Diop",
+            "adresse": "Daup Libert\u00e9 6 Vila 659 Dakar, S\u00e9n\u00e9gal",
+            "telephone": "786959164",
+            "referentiel": "REF DEV",
+            "statut": "Actif"
+        },
+        {
+            "photo": "\/api\/placeholder\/30\/30",
+            "matricule": "1068223",
+            "nom_complet": "Seydina Mouhammad Diop",
+            "adresse": "Daup Libert\u00e9 6 Vila 659 Dakar, S\u00e9n\u00e9gal",
+            "telephone": "786959164",
+            "referentiel": "REF DEV",
+            "statut": "Actif"
+        },
+        {
+            "photo": "\/api\/placeholder\/30\/30",
+            "matricule": "1068224",
+            "nom_complet": "Ousmane Diombassy",
+            "adresse": "Daup Libert\u00e9 6 Vila 659 Dakar, S\u00e9n\u00e9gal",
+            "telephone": "786959164",
+            "referentiel": "DEV WEB\/MOBILE",
+            "statut": "Actif"
+        }
+    ]
+}
