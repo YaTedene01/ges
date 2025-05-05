@@ -1,56 +1,86 @@
 <?php
-// Vérifier que toutes ces fonctions existent
-declare(strict_types=1);
-require_once __DIR__.'/../enums.php';
-// function session_init(): void {
-//     if (session_status() === PHP_SESSION_NONE) {
-//         session_start([
-//             'cookie_lifetime' => 86400,
-//             'cookie_secure' => true,
-//             'cookie_httponly' => true,
-//             'cookie_samesite' => 'Lax'
-//         ]);
-//     }
-// }
+// Assurez-vous que ces fonctions sont correctement définies
 
-function session_init(): void {
-    if (session_status() === PHP_SESSION_NONE) {
-        $is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-                    || $_SERVER['SERVER_PORT'] == 443;
-
-        ini_set('session.cookie_secure', $is_https ? '1' : '0');
-
-        session_start([
-            'cookie_lifetime' => 86400,
-            'cookie_secure' => $is_https,
-            'cookie_httponly' => true,
-            'cookie_samesite' => 'Lax'
-        ]);
-    }
-}
-
-
-function session_set($key, $value) {
+// Fonction pour initialiser la session
+function session_init() {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-    $_SESSION[$key] = $value;
-}
-function session_remove(string $key): void {
-    session_init();
-    unset($_SESSION[$key]);
 }
 
-
-
+// Fonction pour vérifier si une clé existe dans la session
 function session_has($key) {
-    session_init();
-    return isset($_SESSION[$key]);
+    error_log("session_has appelé pour la clé: $key");
+    
+    $keys = explode('.', $key);
+    $value = $_SESSION;
+    
+    foreach ($keys as $segment) {
+        if (!isset($value[$segment])) {
+            error_log("session_has: clé $key non trouvée");
+            return false;
+        }
+        $value = $value[$segment];
+    }
+    
+    error_log("session_has: clé $key trouvée");
+    return true;
 }
 
-function session_get($key, $default = []) {
-    session_init();
-    return $_SESSION[$key] ?? $default;
+// Fonction pour récupérer une valeur de la session
+function session_get($key, $default = null) {
+    error_log("session_get appelé pour la clé: $key");
+    
+    $keys = explode('.', $key);
+    $value = $_SESSION;
+    
+    foreach ($keys as $segment) {
+        if (!isset($value[$segment])) {
+            error_log("session_get: clé $key non trouvée, retourne la valeur par défaut");
+            return $default;
+        }
+        $value = $value[$segment];
+    }
+    
+    error_log("session_get: clé $key trouvée, valeur: " . print_r($value, true));
+    return $value;
+}
+
+// Fonction pour définir une valeur dans la session
+function session_set($key, $value) {
+    error_log("session_set appelé pour la clé: $key avec la valeur: " . print_r($value, true));
+    
+    $keys = explode('.', $key);
+    $session = &$_SESSION;
+    
+    foreach ($keys as $segment) {
+        if (!isset($session[$segment]) || !is_array($session[$segment])) {
+            $session[$segment] = [];
+        }
+        $session = &$session[$segment];
+    }
+    
+    $session = $value;
+    error_log("Session après session_set: " . print_r($_SESSION, true));
+}
+
+// Fonction pour supprimer une valeur de la session
+function session_remove($key) {
+    $keys = explode('.', $key);
+    $session = &$_SESSION;
+    
+    foreach ($keys as $i => $segment) {
+        if (!isset($session[$segment])) {
+            return;
+        }
+        
+        if ($i === count($keys) - 1) {
+            unset($session[$segment]);
+            return;
+        }
+        
+        $session = &$session[$segment];
+    }
 }
 
 function get_old_input($key, $default = '') {

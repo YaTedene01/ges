@@ -1,7 +1,7 @@
 <?php
 //urls.php
 
-define('APP_BASE_URL', 'http://pape.birame.sa.edu.sn:8031');
+define('APP_BASE_URL', 'http://faye.yatedene.sa.edu.sn:8031');
 
 return [
     'promotions' => APP_BASE_URL . '/promotions',

@@ -125,6 +125,7 @@
                         <input type="hidden" name="referentiel_id" value="ID_DU_REFERENTIEL">
                         <button type="submit" class="btn">-</button>
                     </form>
+
                 </div>
             </div>
 

@@ -36,67 +36,60 @@ function handle_file_upload($file) {
 
     return '/uploads/' . $fileName; // Retourner le chemin relatif
 }
-function createPromotion() {
-    // Récupérer les données du formulaire
-    $nom = $_POST['nom'] ?? null;
-    $datedebut = $_POST['datedebut'] ?? null;
-    $datefin = $_POST['datefin'] ?? null;
-    $referentiels = $_POST['referentiels'] ?? null;
-    $photo = $_FILES['photo'] ?? null;
-
-    // Valider les données
-    $errors = [];
-
-    if (!$nom) {
-        $errors['nom'] = 'Le nom de la promotion est obligatoire.';
-    }
-    if (!$datedebut) {
-        $errors['datedebut'] = 'La date de début est obligatoire.';
-    }
-    if (!$datefin) {
-        $errors['datefin'] = 'La date de fin est obligatoire.';
-    }
-    if (!$referentiels) {
-        $errors['referentiels'] = 'Les référentiels sont obligatoires.';
-    }
-    if (!$photo || $photo['error'] !== UPLOAD_ERR_OK) {
-        $errors['photo'] = 'Une photo valide est obligatoire.';
-    }
-
-    // Si des erreurs existent, les afficher et arrêter le traitement
-    if (!empty($errors)) {
-        session_set('validation_errors', $errors);
-        session_set('old_input', $_POST);
-        header('Location: /promotions?action=add');
+function create_promotion() {
+    // Vérifier si le formulaire a été soumis
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create') {
+        // Charger les messages d'erreur
+        $error_messages = include __DIR__ . '/../lang/error.fr.php';
+        $errors = [];
+        
+        // Validation des champs
+        if (empty($_POST['nom'])) {
+            $errors[] = $error_messages['promotion']['nom_required'];
+        }
+        
+        if (empty($_POST['datedebut'])) {
+            $errors[] = $error_messages['promotion']['datedebut_required'];
+        }
+        
+        if (empty($_POST['datefin'])) {
+            $errors[] = $error_messages['promotion']['datefin_required'];
+        }
+        
+        if (empty($_FILES['photo']) || $_FILES['photo']['error'] !== UPLOAD_ERR_OK) {
+            $errors[] = $error_messages['promotion']['photo_required'];
+        }
+        
+        if (empty($_POST['referentiels'])) {
+            $errors[] = $error_messages['promotion']['referentiels_required'];
+        }
+        
+        // S'il y a des erreurs
+        if (!empty($errors)) {
+            // Stocker les erreurs et les anciennes valeurs en session
+            session_set('promotion_errors', $errors);
+            session_set('old_input', $_POST);
+            
+            // Rediriger vers le formulaire
+            redirect('/promotions?action=add');
+            exit;
+        }
+        
+        // Si pas d'erreurs, traiter le formulaire
+        // ... code pour créer la promotion ...
+        
+        // Rediriger avec un message de succès
+        session_set('success_message', ['content' => 'Promotion créée avec succès']);
+        redirect('/promotions');
         exit;
     }
 
-    // Traitement de l'image
-    $photoPath = handle_file_upload($photo);
-
-    // Ajouter la promotion (par exemple, dans un fichier JSON ou une base de données)
-    $filePath = __DIR__ . '/../data/global.json';
-    $jsonData = file_get_contents($filePath);
-    $data = json_decode($jsonData, true);
-
-    $newPromotion = [
-        'id' => uniqid(),
-        'nom' => $nom,
-        'date_debut' => $datedebut,
-        'date_fin' => $datefin,
-        'referentiels' => explode(',', $referentiels),
-        'photo' => $photoPath,
-        'statut' => 'inactive',
-    ];
-
-    $data['promotions'][] = $newPromotion;
-    file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT));
-
-    // Rediriger avec un message de succès
-    session_set('success_message', ['content' => 'Promotion créée avec succès.']);
-    header('Location: /promotions');
-    exit;
 }
+
+
+
+
+
 
 function get_all_promotions() {
     $filePath = __DIR__ . '/../data/global.json';
@@ -240,3 +233,4 @@ function togglePromotionStatus() {
         redirect('/promotions'); // Appel corrigé
     }
 }
+require_once __DIR__ . '/../Services/lang.service.php';

@@ -5,10 +5,11 @@ use App\Enums\ErrorCode;
 
 
 return [
-    ErrorCode::REQUIRED_FIELD->value => 'Le champ %s est obligatoire',
-    ErrorCode::UNIQUE_NAME->value => 'Le nom "%s" existe déjà',
-    ErrorCode::INVALID_DATE->value => 'Format de date invalide (jj/mm/aaaa requis)',
-    ErrorCode::PHOTO_REQUIRED->value => 'La photo est obligatoire',
-    ErrorCode::PHOTO_FORMAT->value => 'Format d\'image invalide (JPG ou PNG uniquement)',
-    ErrorCode::PHOTO_SIZE->value => 'La taille de l\'image ne doit pas dépasser 2Mo'
+    'promotion' => [
+        'nom_required' => 'Le nom de la promotion est obligatoire',
+        'datedebut_required' => 'La date de début est obligatoire',
+        'datefin_required' => 'La date de fin est obligatoire',
+        'photo_required' => 'La photo de la promotion est obligatoire',
+        'referentiels_required' => 'Au moins un référentiel est obligatoire'
+    ]
 ];

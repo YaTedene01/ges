@@ -222,46 +222,6 @@ function showAjoutApprenant() {
     ]);
 }
 
-function createApprenant() {
-    // Récupérer les données du formulaire
-    $prenom = $_POST['prenom'] ?? null;
-    $nom = $_POST['nom'] ?? null;
-    $date_naissance = $_POST['date_naissance'] ?? null;
-    $lieu_naissance = $_POST['lieu_naissance'] ?? null;
-    $adresse = $_POST['adresse'] ?? null;
-    $email = $_POST['email'] ?? null;
-    $telephone = $_POST['telephone'] ?? null;
-
-    // Valider les champs obligatoires
-    if (!$prenom || !$nom || !$date_naissance || !$lieu_naissance || !$adresse || !$email || !$telephone) {
-        die('Tous les champs sont obligatoires.');
-    }
-
-    // Charger les données existantes
-    $filePath = __DIR__ . '/../data/global.json';
-    $jsonData = file_get_contents($filePath);
-    $data = json_decode($jsonData, true);
-
-    // Ajouter le nouvel apprenant
-    $newApprenant = [
-        'id' => uniqid(),
-        'prenom' => $prenom,
-        'nom' => $nom,
-        'date_naissance' => $date_naissance,
-        'lieu_naissance' => $lieu_naissance,
-        'adresse' => $adresse,
-        'email' => $email,
-        'telephone' => $telephone,
-    ];
-    $data['apprenants'][] = $newApprenant;
-
-    // Sauvegarder les données mises à jour
-    file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT));
-
-    // Rediriger vers la liste des apprenants
-    header('Location: /apprenants');
-    exit;
-}
 
 function searchApprenants() {
     $matricule = $_GET['matricule'] ?? '';

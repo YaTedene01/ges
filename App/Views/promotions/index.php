@@ -327,7 +327,7 @@ $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $totalPages = ceil($totalItems / $itemsPerPage);
 $offset = ($currentPage - 1) * $itemsPerPage;
 $currentPromos = array_slice($promos, $offset, $itemsPerPage);?>
-    <div class="pagination">
+    <div class="pagination <?= (isset($_GET['action']) && $_GET['action'] === 'add') ? 'hidden' : '' ?>">
     <div class="pagination-info">
         <?= $currentPage ?> à <?= $itemsPerPage ?> pour <?= $totalItems ?>
     </div>
@@ -358,6 +358,7 @@ $currentPromos = array_slice($promos, $offset, $itemsPerPage);?>
     <!-- Formulaire d'ajout de promotion -->
     <div class="add-promotion-form">
         <h2>Créer une nouvelle promotion</h2>
+        
         <form action="/promotions/create" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="action" value="create">
             
@@ -366,7 +367,11 @@ $currentPromos = array_slice($promos, $offset, $itemsPerPage);?>
                 <label for="promotionName">Nom de la promotion*</label>
                 <input type="text" id="promotionName" name="nom" class="form-control" 
                     placeholder="Ex: Promotion 2025" 
-                    value="<?= htmlspecialchars(get_old_input('nom')) ?>" required>
+
+
+
+
+                    value="<?= htmlspecialchars(get_old_input('nom')) ?>">
             </div>
 
             <!-- Dates -->
@@ -374,42 +379,64 @@ $currentPromos = array_slice($promos, $offset, $itemsPerPage);?>
                 <div class="form-group">
                     <label for="startDate">Date de début*</label>
                     <input type="date" id="startDate" name="datedebut" class="form-control" 
-                        value="<?= htmlspecialchars(get_old_input('datedebut')) ?>" required>
+
+
+
+
+                        value="<?= htmlspecialchars(get_old_input('datedebut')) ?>">
                 </div>
                 <div class="form-group">
                     <label for="endDate">Date de fin*</label>
                     <input type="date" id="endDate" name="datefin" class="form-control" 
-                        value="<?= htmlspecialchars(get_old_input('datefin')) ?>" required>
+
+
+
+
+                        value="<?= htmlspecialchars(get_old_input('datefin')) ?>">
                 </div>
             </div>
 
             <!-- Photo -->
             <div class="form-group">
                 <label for="photo">Photo de la promotion*</label>
-                <input type="file" id="photo" name="photo" class="form-control" accept="image/jpeg,image/png" required>
+                <input type="file" id="photo" name="photo" class="form-control" accept="image/jpeg,image/png">
+
+
+
             </div>
 
             <!-- Référentiels -->
             <div class="form-group">
                 <label for="referentiels">Référentiels*</label>
                 <input type="text" id="referentiels" name="referentiels" class="form-control" 
-                    placeholder="Ex: DEV WEB/MOBILE"
-                    value="<?= htmlspecialchars(get_old_input('referentiels')) ?>" required>
+
+
+
+
+
+                    placeholder="Ex: DEV WEB/MOBILE,REF DIG,DEV DATA"
+                    value="<?= htmlspecialchars(get_old_input('referentiels')) ?>">
             </div>
 
             <button type="submit" class="btn btn-primary">Créer la promotion</button>
             <a href="/promotions" class="btn btn-secondary">Annuler</a>
         </form>
     </div>
-    
-<?php else: ?>
 <?php endif; ?>
 
-    <?php
-    // Nettoyer les messages après affichage
-    clear_session_messages();
-    ?>
-    <script>
+
+
+
+<?php
+// Nettoyer les messages d'erreur après affichage
+if (session_has('promotion_errors')) {
+    session_remove('promotion_errors');
+}
+if (session_has('old_input')) {
+    session_remove('old_input');
+}
+?>    
+<!--<script>
     document.addEventListener('DOMContentLoaded', function() {
         // Formater les dates
         const dateInputs = document.querySelectorAll('#startDate, #endDate');
@@ -435,6 +462,7 @@ $currentPromos = array_slice($promos, $offset, $itemsPerPage);?>
         });
     });
     </script>
+-->
     
 </div>
 </body>

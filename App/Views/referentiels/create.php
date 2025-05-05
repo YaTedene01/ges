@@ -25,66 +25,103 @@
         .form-group label {
             display: block;
             margin-bottom: 5px;
-            font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
         }
         .form-control {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 14px;
-        }
-        .form-control:focus {
-            outline: none;
-            border-color: #0a967a;
+            box-sizing: border-box;
         }
         .btn {
-            background-color: #0a967a;
-            color: white;
+            padding: 10px 15px;
             border: none;
-            padding: 10px 20px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 600;
-            text-align: center;
+            text-decoration: none;
+            display: inline-block;
         }
-        .btn:hover {
-            background-color: #078069;
+        .btn-primary {
+            background-color: #ff6b1b;
+            color: white;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            margin-left: 10px;
+        }
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85em;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Créer un Référentiel</h1>
+        <h1>Créer un nouveau référentiel</h1>
+        
         <form action="/referentiels/create" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="action" value="create">
+            
+            <!-- Champ Nom -->
             <div class="form-group">
-                <label for="nom">Nom*</label>
-                <input type="text" id="nom" name="nom" class="form-control" required>
+                <label for="nom">Nom du référentiel*</label>
+                <input type="text" id="nom" name="nom" class="form-control" 
+                    placeholder="Ex: Développement Web/Mobile" 
+                    value="<?= htmlspecialchars(session_get('old_input.nom', '')) ?>">
+                <?php if (session_has('referentiel_errors') && isset(session_get('referentiel_errors')['nom'])): ?>
+                    <div class="error-message"><?= htmlspecialchars(session_get('referentiel_errors')['nom']) ?></div>
+                <?php endif; ?>
             </div>
+            
+            <!-- Description -->
             <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" name="description" class="form-control"></textarea>
+                <label for="description">Description*</label>
+                <textarea id="description" name="description" class="form-control" 
+                    placeholder="Description du référentiel" rows="4"><?= htmlspecialchars(session_get('old_input.description', '')) ?></textarea>
+                <?php if (session_has('referentiel_errors') && isset(session_get('referentiel_errors')['description'])): ?>
+                    <div class="error-message"><?= htmlspecialchars(session_get('referentiel_errors')['description']) ?></div>
+                <?php endif; ?>
             </div>
+            
+            <!-- Image -->
             <div class="form-group">
-                <label for="capacite">Capacité*</label>
-                <input type="number" id="capacite" name="capacite" class="form-control" value="30" required>
+                <label for="image">Image du référentiel*</label>
+                <input type="file" id="image" name="image" class="form-control" accept="image/jpeg,image/png">
+                <?php if (session_has('referentiel_errors') && isset(session_get('referentiel_errors')['image'])): ?>
+                    <div class="error-message"><?= htmlspecialchars(session_get('referentiel_errors')['image']) ?></div>
+                <?php endif; ?>
             </div>
+            
+            <!-- Capacité -->
             <div class="form-group">
-                <label for="sessions">Nombre de sessions*</label>
-                <select id="sessions" name="sessions" class="form-control" required>
-                    <option>1 session</option>
-                    <option>2 sessions</option>
-                    <option>3 sessions</option>
-                    <option>4 sessions</option>
-                </select>
+                <label for="capacite">Capacité (nombre d'apprenants)*</label>
+                <input type="number" id="capacite" name="capacite" class="form-control" 
+                    placeholder="Ex: 30" 
+                    value="<?= htmlspecialchars(session_get('old_input.capacite', '')) ?>">
+                <?php if (session_has('referentiel_errors') && isset(session_get('referentiel_errors')['capacite'])): ?>
+                    <div class="error-message"><?= htmlspecialchars(session_get('referentiel_errors')['capacite']) ?></div>
+                <?php endif; ?>
             </div>
-            <div class="form-group">
-                <label for="photo">Photo</label>
-                <input type="file" id="photo" name="photo" class="form-control">
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Créer le référentiel</button>
+                <a href="/referentiels" class="btn btn-secondary">Annuler</a>
             </div>
-            <button type="submit" class="btn">Créer</button>
         </form>
     </div>
+    
+    <?php
+    // Nettoyer les messages d'erreur après affichage
+    if (session_has('referentiel_errors')) {
+        session_remove('referentiel_errors');
+    }
+    if (session_has('old_input')) {
+        session_remove('old_input');
+    }
+    ?>
 </body>
 </html>

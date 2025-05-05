@@ -1,15 +1,16 @@
 <?php
-// Afficher toutes les erreurs
+// Fichier: public/index.php
+ini_set('display_startup_errors', 1);
+// Configuration des erreurs
+error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__.'/../storage/logs/error.log');
 
 // Initialisation des services
 require_once __DIR__.'/../App/Services/session.service.php';
 session_init();
-
-// Log pour vérifier
-error_log("Session initialisée: " . print_r($_SESSION, true));
 
 // Chargement des routes
 $routes = require __DIR__ . '/../App/route/route.web.php';

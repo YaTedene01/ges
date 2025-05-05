@@ -66,19 +66,24 @@ return [
 
     'GET /promotions/toggle' => fn() => Promo\togglePromotionStatus(),
 
-    'POST /promotions/create' => 'App\Controllers\PromoController@create',
+    'POST /promotions/create' => function() {
+        require_once __DIR__ . '/../Controllers/PromoController.php';
+        App\Controllers\create_promotion();
+    },
     // 'POST /promotions/delete' => fn() => Promo\deletePromotion(),
 
     'GET /referentiels' => function () {
         App\Controllers\showActivePromotionReferentiels();
     },
 
-    'GET /referentiels/create' => function () {
-        session_init();
-        checkAuth();
-        return protectedView('referentiels', 'referentiels/create.php', 'Créer un Référentiel');
+    'GET /referentiels/create' => function() {
+        require_once __DIR__ . '/../Controllers/ReferentielController.php';
+        App\Controllers\show_create_form();
     },
-    'POST /referentiels/create' => fn() => App\Controllers\addReferentiel(),
+    'POST /referentiels/create' => function() {
+        require_once __DIR__ . '/../Controllers/ReferentielController.php';
+        App\Controllers\create_referentiel();
+    },
 
     'GET /referentiels/index' => function () {
         App\Controllers\showReferentiels();
@@ -104,8 +109,11 @@ return [
         App\Controllers\showAjoutApprenant();
     },
 
-    'POST /apprenants/create' => function () {
-        App\Controllers\createApprenant();
+
+
+    'POST /apprenants/create' => function() {
+        require_once __DIR__ . '/../Controllers/ApprenantController.php';
+        App\Controllers\create_apprenant(); // Utilisez le nom correct avec underscores au lieu de createApprenant()
     },
 
     'GET /forgot-password' => fn() => User\forgotPassword(),
